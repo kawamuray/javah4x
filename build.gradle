@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    testImplementation 'junit:junit:4.13'
+    testCompile 'org.mockito:mockito-core:2.+'
+}
+
+compileTestJava {
+    options.compilerArgs << '-parameters'
+}
+
+task('buildExecutable') {
+    shouldRunAfter(jar)
+    doLast {
+        File scriptFile = new File(project.rootDir, "javah4x.sh")
+        File jarFile = new File(project.buildDir, "libs/javah4x-${project.version}.jar")
+        File outFile = new File(project.buildDir, "distributions/javah4x-${project.version}")
+        outFile.setBytes(new byte[0])
+        outFile.append(scriptFile.newInputStream())
+        outFile.append(jarFile.newInputStream())
+    }
+}
+build.dependsOn('buildExecutable')
+
+group = 'javah4x'
+version = '0.1.0'
