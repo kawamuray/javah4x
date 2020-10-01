@@ -3,6 +3,9 @@ plugins {
     id 'application'
 }
 
+group = 'javah4x'
+version = '0.1.0'
+
 repositories {
     jcenter()
 }
@@ -19,18 +22,25 @@ compileTestJava {
     options.compilerArgs << '-parameters'
 }
 
-task('buildExecutable') {
-    shouldRunAfter(jar)
+task executable {
+    dependsOn 'jar'
     doLast {
         File scriptFile = new File(project.rootDir, "javah4x.sh")
         File jarFile = new File(project.buildDir, "libs/javah4x-${project.version}.jar")
-        File outFile = new File(project.buildDir, "distributions/javah4x-${project.version}")
+        File outDir = new File(project.buildDir, "distributions")
+        outDir.mkdirs()
+        File outFile = new File(outDir, "javah4x-${project.version}")
         outFile.setBytes(new byte[0])
         outFile.append(scriptFile.newInputStream())
         outFile.append(jarFile.newInputStream())
+        outFile.setExecutable(true)
     }
 }
-build.dependsOn('buildExecutable')
+assemble.dependsOn('executable')
 
-group = 'javah4x'
-version = '0.1.0'
+task executableZip(type: Zip) {
+    dependsOn 'executable'
+    from "${project.buildDir}/distributions/javah4x-${project.version}"
+    destinationDirectory = new File(project.buildDir, "distributions")
+    archiveFileName = "javah4x-bin-${project.version}.zip"
+}
