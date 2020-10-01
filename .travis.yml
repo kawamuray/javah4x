@@ -1,0 +1,24 @@
+language: java
+# We need to keep using this dist to make oraclejdk8 installation work.
+# https://travis-ci.community/t/install-of-oracle-jdk-8-failing/3038/9
+dist: trusty
+jdk: oraclejdk8
+# https://docs.travis-ci.com/user/languages/java/#caching
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+- directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+script: ./gradlew clean build executableZip
+deploy:
+  provider: releases
+  api_key:
+    secure: mGSxZLNdmmJgJn0jimf1sYJYKEB77wpcLPg3owLg8EVYvlGT2hxhjtS0cZqNnIPbXkDNgg/Lmqh02P/TUVq4HWAPIK0lpOEMhS9KV0zJvSiXhdRDsMS5HHt8Y/Tj/e4bTQW04yUyJe3OyEq+WrnNJ4URi98Sgmsa/AvEqSLocv1ehMM6e4OG5uJhDpcXfpFtS9i3Su5/pKWW41P+bLaeYSUl7BNt8GXrOSd/acVfnedj5W8oWth+HyBDwRuB7pNJ57t7isliuG+Y0Axn0M4UqPnfXKKSpPemUIQ8CMKpsKfIXGCRVhMWwdpjBC9YHjYdvjuilkpGjTDb4xYOQRcw6BfJdq1uT4QhCtztMJpJRWwIKhqLPI8fPPD1WsnrelqCGvS+GCQBDDvUFVIHUKn1dYezqDrXvORu6NUIDgTPM/qf/xNg9prpF8MqARmnfSOiL1aoqZk7GLw1iK2Zl2krE0qRJJSMzi+Hz19Y618/RGcbin8LfX1fqZ5BMzWr52Q9ZXCxrOD6VBCWgDJvLDRMckjWu2IBa1g6ea+QTdKsZ2e67LduzDwlCPHanM52dEVisH2V/hbCLuyXf011RewzTk8XE1oM0MhEkIOuXdAxAmK3nOJTp5PJYexDXE4p6nsi2NRZHTwylYFDjxG+IpZ7CJqamTR5ulxNAgW88svqGSE=
+  file_glob: true
+  file: ./build/distributions/javah4x-bin-*.zip
+  skip_cleanup: true
+  on:
+    repo: kawamuray/javah4x
+    tags: true
