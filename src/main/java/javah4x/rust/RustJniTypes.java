@@ -128,7 +128,7 @@ public final class RustJniTypes {
             case DOUBLE:
                 return "Default::default()";
             default:
-                return "JObject::null().into_inner()";
+                return "JObject::null().into_raw()";
         }
     }
 }

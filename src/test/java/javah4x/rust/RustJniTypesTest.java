@@ -34,7 +34,7 @@ public class RustJniTypesTest {
     public void defaultValue() {
         assertEquals("Default::default()", RustJniTypes.defaultValue(JniType.VOID));
         assertEquals("Default::default()", RustJniTypes.defaultValue(JniType.BOOLEAN));
-        assertEquals("JObject::null().into_inner()", RustJniTypes.defaultValue(JniType.STRING));
-        assertEquals("JObject::null().into_inner()", RustJniTypes.defaultValue(JniType.OBJECT));
+        assertEquals("JObject::null().into_raw()", RustJniTypes.defaultValue(JniType.STRING));
+        assertEquals("JObject::null().into_raw()", RustJniTypes.defaultValue(JniType.OBJECT));
     }
 }
