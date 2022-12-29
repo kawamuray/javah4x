@@ -15,7 +15,7 @@ public final class StringUtils {
     public static String toSnakeCase(String s) {
         Pattern pat = Pattern.compile("([A-Z])");
         Matcher matcher = pat.matcher(s);
-        StringBuilder sb = new StringBuilder();
+        StringBuffer sb = new StringBuffer();
         while (matcher.find()) {
             String upCase = matcher.group(1);
             matcher.appendReplacement(sb, '_' + upCase.toLowerCase());
