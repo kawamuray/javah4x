@@ -50,6 +50,8 @@ public interface JavaType {
 
     JniType jniType();
 
+    String jniTypeSign();
+
     /**
      * Primitive types.
      */
@@ -86,6 +88,32 @@ public interface JavaType {
                     return JniType.FLOAT;
                 case DOUBLE:
                     return JniType.DOUBLE;
+                default:
+                    throw new RuntimeException("never happens");
+            }
+        }
+
+        @Override
+        public String jniTypeSign() {
+            switch (this) {
+                case VOID:
+                    return "V";
+                case BOOLEAN:
+                    return "Z";
+                case BYTE:
+                    return "B";
+                case CHAR:
+                    return "C";
+                case SHORT:
+                    return "S";
+                case INT:
+                    return "I";
+                case LONG:
+                    return "J";
+                case FLOAT:
+                    return "F";
+                case DOUBLE:
+                    return "D";
                 default:
                     throw new RuntimeException("never happens");
             }
@@ -127,6 +155,11 @@ public interface JavaType {
             }
             return JniType.OBJECT_ARRAY;
         }
+
+        @Override
+        public String jniTypeSign() {
+            return StringUtils.mangle("[") + innerType.jniTypeSign();
+        }
     }
 
     /**
@@ -151,6 +184,11 @@ public interface JavaType {
                 return JniType.STRING;
             }
             return JniType.OBJECT;
+        }
+
+        @Override
+        public String jniTypeSign() {
+            return StringUtils.mangle('L' + type.getName() + ';');
         }
     }
 }

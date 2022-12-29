@@ -48,8 +48,21 @@ public class MethodInfo {
      * @return the name of function to implement in JNI module.
      */
     public String jniFuncName() {
-        return String.format("Java_%s_%s",
-                             classInfo.fullyQualifiedNameDelimitedWith("_"), name());
+        String name = String.format("Java_%s_%s", StringUtils.mangle(classInfo.fqn()), StringUtils.mangle(name()));
+        String suffix = argumentSignature();
+        if (!suffix.isEmpty()) {
+            name += "__";
+            name += suffix;
+        }
+        return name;
+    }
+
+    private String argumentSignature() {
+        StringBuilder sb = new StringBuilder();
+        for (Class<?> parameterType : method.getParameterTypes()) {
+            sb.append(JavaType.fromClass(parameterType).jniTypeSign());
+        }
+        return sb.toString();
     }
 
     /**

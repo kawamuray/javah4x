@@ -23,4 +23,11 @@ public final class StringUtils {
         matcher.appendTail(sb);
         return sb.toString();
     }
+
+    public static String mangle(String symbol) {
+        return symbol.replace("_", "_1")
+                .replace(";", "_2")
+                .replace("[", "_3")
+                .replace('.', '_');
+    }
 }

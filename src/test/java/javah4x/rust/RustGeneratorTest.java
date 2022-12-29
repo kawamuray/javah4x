@@ -60,7 +60,7 @@ public class RustGeneratorTest {
                      + "}\n"
                      + '\n'
                      + "#[no_mangle]\n"
-                     + "extern \"system\" fn Java_javah4x_test_TestJniClass_doNothing(env: JNIEnv, clazz: JClass, name: JString, x: jint) {\n"
+                     + "extern \"system\" fn Java_javah4x_test_TestJniClass_doNothing__Ljava_lang_String_2I(env: JNIEnv, clazz: JClass, name: JString, x: jint) {\n"
                      + "    wrap_error!(env, JniTestJniClassImpl::do_nothing(&env, clazz, name, x), Default::default())\n"
                      + "}\n"
                      + '\n'

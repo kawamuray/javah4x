@@ -34,6 +34,10 @@ public class ClassInfo {
 		return clazz.getName().replace(".", delim);
 	}
 
+	public String fqn() {
+		return clazz.getName();
+	}
+
 	/**
 	 * Returns the name of this class.
 	 * @return name of this class.
