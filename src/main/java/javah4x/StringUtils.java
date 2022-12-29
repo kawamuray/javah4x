@@ -15,12 +15,19 @@ public final class StringUtils {
     public static String toSnakeCase(String s) {
         Pattern pat = Pattern.compile("([A-Z])");
         Matcher matcher = pat.matcher(s);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             String upCase = matcher.group(1);
             matcher.appendReplacement(sb, '_' + upCase.toLowerCase());
         }
         matcher.appendTail(sb);
         return sb.toString();
+    }
+
+    public static String mangle(String symbol) {
+        return symbol.replace("_", "_1")
+                .replace(";", "_2")
+                .replace("[", "_3")
+                .replace('.', '_');
     }
 }
