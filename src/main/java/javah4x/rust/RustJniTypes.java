@@ -24,7 +24,7 @@ public final class RustJniTypes {
                 return "JObject";
             case JNI_ENV:
                 if (reference) {
-                    return "&JNIEnv";
+                    return "&mut JNIEnv";
                 } else {
                     return "JNIEnv";
                 }

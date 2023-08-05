@@ -55,18 +55,18 @@ public class RustGeneratorTest {
                      + '\n'
                      + "trait JniTestJniClass<'a> {\n"
                      + "    type Error: Desc<'a, JThrowable<'a>>;\n"
-                     + "    fn do_nothing(env: &JNIEnv, clazz: JClass, name: JString, x: jint) -> Result<(), Self::Error>;\n"
-                     + "    fn get_int(env: &JNIEnv, this: JObject) -> Result<jint, Self::Error>;\n"
+                     + "    fn do_nothing(env: &mut JNIEnv, clazz: JClass, name: JString, x: jint) -> Result<(), Self::Error>;\n"
+                     + "    fn get_int(env: &mut JNIEnv, this: JObject) -> Result<jint, Self::Error>;\n"
                      + "}\n"
                      + '\n'
                      + "#[no_mangle]\n"
                      + "extern \"system\" fn Java_javah4x_test_TestJniClass_doNothing__Ljava_lang_String_2I(env: JNIEnv, clazz: JClass, name: JString, x: jint) {\n"
-                     + "    wrap_error!(env, JniTestJniClassImpl::do_nothing(&env, clazz, name, x), Default::default())\n"
+                     + "    wrap_error!(env, JniTestJniClassImpl::do_nothing(&mut env, clazz, name, x), Default::default())\n"
                      + "}\n"
                      + '\n'
                      + "#[no_mangle]\n"
                      + "extern \"system\" fn Java_javah4x_test_TestJniClass_getInt(env: JNIEnv, this: JObject) -> jint {\n"
-                     + "    wrap_error!(env, JniTestJniClassImpl::get_int(&env, this), Default::default())\n"
+                     + "    wrap_error!(env, JniTestJniClassImpl::get_int(&mut env, this), Default::default())\n"
                      + "}\n\n", rustCode);
     }
 }

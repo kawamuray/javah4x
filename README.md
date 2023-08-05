@@ -43,8 +43,8 @@ This command generates a module `javah4x_test_TestClass` in `./src` directory wi
 ```rust
 trait JniTestClass<'a> {
     type Error: Desc<'a, JThrowable<'a>>;
-    fn do_nothing(env: &JNIEnv, clazz: JClass, name: JString, x: jint) -> Result<(), Self::Error>;
-    fn get_int(env: &JNIEnv, this: JObject) -> Result<jint, Self::Error>;
+    fn do_nothing(env: &mut JNIEnv, clazz: JClass, name: JString, x: jint) -> Result<(), Self::Error>;
+    fn get_int(env: &mut JNIEnv, this: JObject) -> Result<jint, Self::Error>;
 }
 
 #[no_mangle]
@@ -59,10 +59,10 @@ You can then add a submodule named `imp` (`javah4x_test_TestClass/imp.rs`) under
 struct JniTestClassImpl;
 impl<'a> JniTestClass<'a> for JniTestClassImpl {
     type Error: Desc<'a, JThrowable<'a>> = MyErrorType;
-    fn do_nothing(env: &JNIEnv, clazz: JClass, name: JString, x: jint) -> Result<(), Self::Error> {
+    fn do_nothing(env: &mut JNIEnv, clazz: JClass, name: JString, x: jint) -> Result<(), Self::Error> {
         // doing nothing...
     }
-    fn get_int(env: &JNIEnv, this: JObject) -> Result<jint, Self::Error> { ... }
+    fn get_int(env: &mut JNIEnv, this: JObject) -> Result<jint, Self::Error> { ... }
 }
 ```
 

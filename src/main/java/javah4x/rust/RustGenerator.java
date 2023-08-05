@@ -95,7 +95,7 @@ public class RustGenerator implements CodeGenerator {
                 pw.printf("extern \"system\" fn %s(%s)%s {\n",
                           method.jniFuncName(), toRustParams(method.params(), false),
                           RustJniTypes.fnReturnSign(method.retType().jniType()));
-                pw.printf("    wrap_error!(env, %s::%s(&env, %s), %s)\n",
+                pw.printf("    wrap_error!(env, %s::%s(&mut env, %s), %s)\n",
                           implTypeName, StringUtils.toSnakeCase(method.name()),
                           toRustParamNames(method.params().stream().skip(1).collect(toList())),
                           RustJniTypes.defaultValue(method.retType().jniType()));
