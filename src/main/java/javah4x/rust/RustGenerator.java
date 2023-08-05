@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javah4x.ClassInfo;
@@ -114,11 +116,17 @@ public class RustGenerator implements CodeGenerator {
     }
 
     private static String toRustParams(Collection<Param<JniType>> params, boolean trait) {
-        return params.stream()
-                     .map(param -> String.format("%s: %s",
-                                                 StringUtils.toSnakeCase(param.name()),
-                                                 RustJniTypes.rustJniParamType(param.type(), trait)))
-                     .collect(Collectors.joining(", "));
+        List<String> parts = new ArrayList<>();
+        boolean isFirst = true;
+        for (Param<JniType> param : params) {
+            String var = String.format("%s%s: %s",
+                    !trait && isFirst && param.type() == JniType.JNI_ENV ? "mod " : "",
+                    StringUtils.toSnakeCase(param.name()),
+                    RustJniTypes.rustJniParamType(param.type(), trait));
+            parts.add(var);
+            isFirst = false;
+        }
+        return String.join(", ", parts);
     }
 
     void maybeApplyRustfmt(Path path) {

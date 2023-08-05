@@ -19,9 +19,9 @@ we have to add following function declarations to our Rust code:
 
 ```rust
 #[no_mangle]
-extern "system" fn Java_javah4x_test_TestClass_doNothing(env: JNIEnv, clazz: JClass, name: JString, x: jint) { ... }
+extern "system" fn Java_javah4x_test_TestClass_doNothing(mut env: JNIEnv, clazz: JClass, name: JString, x: jint) { ... }
 #[no_mangle]
-extern "system" fn Java_javah4x_test_TestClass_getInt(env: JNIEnv, this: JObject) -> jint { ... }
+extern "system" fn Java_javah4x_test_TestClass_getInt(mut env: JNIEnv, this: JObject) -> jint { ... }
 ```
 
 It works well when there's a few classes and methods to write JNI bindings, but it becomes error prone as the number of classes and methods increase, especially when making change in method signature.
@@ -48,7 +48,7 @@ trait JniTestClass<'a> {
 }
 
 #[no_mangle]
-extern "system" fn Java_javah4x_test_TestClass_doNothing(env: JNIEnv, clazz: JClass, name: JString, x: jint) {
+extern "system" fn Java_javah4x_test_TestClass_doNothing(mut env: JNIEnv, clazz: JClass, name: JString, x: jint) {
     wrap_error!(env, JniTestClassImpl::do_nothing(&env, clazz, name, x), Default::default())
 }
 ```
