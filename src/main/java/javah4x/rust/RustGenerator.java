@@ -120,7 +120,7 @@ public class RustGenerator implements CodeGenerator {
         boolean isFirst = true;
         for (Param<JniType> param : params) {
             String var = String.format("%s%s: %s",
-                    !trait && isFirst && param.type() == JniType.JNI_ENV ? "mod " : "",
+                    !trait && isFirst && param.type() == JniType.JNI_ENV ? "mut " : "",
                     StringUtils.toSnakeCase(param.name()),
                     RustJniTypes.rustJniParamType(param.type(), trait));
             parts.add(var);
