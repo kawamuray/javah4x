@@ -12,7 +12,7 @@ public class RustJniTypesTest {
         assertEquals("jboolean", RustJniTypes.rustJniParamType(JniType.BOOLEAN, false));
         assertEquals("JObject", RustJniTypes.rustJniParamType(JniType.OBJECT, false));
         assertEquals("JNIEnv", RustJniTypes.rustJniParamType(JniType.JNI_ENV, false));
-        assertEquals("&mut JNIEnv", RustJniTypes.rustJniParamType(JniType.JNI_ENV, true));
+        assertEquals("&mut JNIEnv<'a>", RustJniTypes.rustJniParamType(JniType.JNI_ENV, true));
     }
 
     @Test

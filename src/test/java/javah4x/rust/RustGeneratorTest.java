@@ -55,8 +55,8 @@ public class RustGeneratorTest {
                      + '\n'
                      + "trait JniTestJniClass<'a> {\n"
                      + "    type Error: Desc<'a, JThrowable<'a>>;\n"
-                     + "    fn do_nothing(env: &mut JNIEnv, clazz: JClass, name: JString, x: jint) -> Result<(), Self::Error>;\n"
-                     + "    fn get_int(env: &mut JNIEnv, this: JObject) -> Result<jint, Self::Error>;\n"
+                     + "    fn do_nothing(env: &mut JNIEnv<'a>, clazz: JClass<'a>, name: JString<'a>, x: jint) -> Result<(), Self::Error>;\n"
+                     + "    fn get_int(env: &mut JNIEnv<'a>, this: JObject<'a>) -> Result<jint, Self::Error>;\n"
                      + "}\n"
                      + '\n'
                      + "#[no_mangle]\n"

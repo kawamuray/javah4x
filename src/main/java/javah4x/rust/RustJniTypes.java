@@ -10,24 +10,35 @@ public final class RustJniTypes {
      * This method returns the type which has a lifetime parameter where possible, so for {@link JniType#OBJECT}
      * "JObject" is returned instead of "jobject".
      * @param type the JNI type.
-     * @param reference determine whether to return the reference type or the value type for
+     * @param trait determine whether to return the trait type or the value type for
      * {@link JniType#JNI_ENV}.
      * @return the type of Rust's jni crate.
      */
-    public static String rustJniParamType(JniType type, boolean reference) {
+    public static String rustJniParamType(JniType type, boolean trait) {
+        String ty = null;
         switch (type) {
             case CLASS:
-                return "JClass";
+                ty = "JClass";
+                break;
             case STRING:
-                return "JString";
+                ty = "JString";
+                break;
             case OBJECT:
-                return "JObject";
+                ty = "JObject";
+                break;
             case JNI_ENV:
-                if (reference) {
-                    return "&mut JNIEnv";
+                if (trait) {
+                    ty = "&mut JNIEnv";
                 } else {
-                    return "JNIEnv";
+                    ty = "JNIEnv";
                 }
+                break;
+        }
+        if (ty != null) {
+            if (trait) {
+                ty += "<'a>";
+            }
+            return ty;
         }
         return rustJniType(type);
     }
