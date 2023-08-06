@@ -60,12 +60,12 @@ public class RustGeneratorTest {
                      + "}\n"
                      + '\n'
                      + "#[no_mangle]\n"
-                     + "extern \"system\" fn Java_javah4x_test_TestJniClass_doNothing__Ljava_lang_String_2I(mut env: JNIEnv, clazz: JClass, name: JString, x: jint) {\n"
+                     + "extern \"system\" fn Java_javah4x_test_TestJniClass_doNothing__Ljava_lang_String_2I<'a>(mut env: JNIEnv<'a>, clazz: JClass<'a>, name: JString<'a>, x: jint) {\n"
                      + "    wrap_error!(env, JniTestJniClassImpl::do_nothing(&mut env, clazz, name, x), Default::default())\n"
                      + "}\n"
                      + '\n'
                      + "#[no_mangle]\n"
-                     + "extern \"system\" fn Java_javah4x_test_TestJniClass_getInt(mut env: JNIEnv, this: JObject) -> jint {\n"
+                     + "extern \"system\" fn Java_javah4x_test_TestJniClass_getInt<'a>(mut env: JNIEnv<'a>, this: JObject<'a>) -> jint {\n"
                      + "    wrap_error!(env, JniTestJniClassImpl::get_int(&mut env, this), Default::default())\n"
                      + "}\n\n", rustCode);
     }

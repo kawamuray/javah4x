@@ -18,27 +18,17 @@ public final class RustJniTypes {
         String ty = null;
         switch (type) {
             case CLASS:
-                ty = "JClass";
-                break;
+                return "JClass<'a>";
             case STRING:
-                ty = "JString";
-                break;
+                return "JString<'a>";
             case OBJECT:
-                ty = "JObject";
-                break;
+                return "JObject<'a>";
             case JNI_ENV:
                 if (trait) {
-                    ty = "&mut JNIEnv";
+                    return "&mut JNIEnv<'a>";
                 } else {
-                    ty = "JNIEnv";
+                    return "JNIEnv<'a>";
                 }
-                break;
-        }
-        if (ty != null) {
-            if (trait) {
-                ty += "<'a>";
-            }
-            return ty;
         }
         return rustJniType(type);
     }

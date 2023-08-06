@@ -94,7 +94,7 @@ public class RustGenerator implements CodeGenerator {
 
             for (MethodInfo method : classInfo.methods()) {
                 pw.println("#[no_mangle]");
-                pw.printf("extern \"system\" fn %s(%s)%s {\n",
+                pw.printf("extern \"system\" fn %s<'a>(%s)%s {\n",
                           method.jniFuncName(), toRustParams(method.params(), false),
                           RustJniTypes.fnReturnSign(method.retType().jniType()));
                 pw.printf("    wrap_error!(env, %s::%s(&mut env, %s), %s)\n",
